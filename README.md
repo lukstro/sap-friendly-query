@@ -36,26 +36,26 @@ The tool automatically translates these friendly field names into their correspo
 ### Using __SQL__
 ```python
 from pyspark.sql import SparkSession
-from sap_friendly_query.query_engine import SAPQueryHelper
+from sap_friendly_query.query_engine import SapFriendlyQuery
 
 spark = SparkSession.builder.appName("SAPSQLQuery").getOrCreate()
-query_helper = SAPQueryHelper(spark)
+query = SapFriendlyQuery(spark)
 
 sql = "SELECT purchase_order, company_code, created_on FROM ekko WHERE created_on >= '2024-01-01'"
-df = query_helper.query("ekko", sql)
+df = query.query("ekko", sql)
 df.show()
 ```
 
 ### Using __Pyspark__
 ```python
 from pyspark.sql import SparkSession
-from sap_friendly_query.query_engine import SAPQueryHelper
+from sap_friendly_query.query_engine import SapFriendlyQuery
 
 spark = SparkSession.builder.appName("SAPPySparkQuery").getOrCreate()
-query_helper = SAPQueryHelper(spark)
+query = SapFriendlyQuery(spark)
 
 raw_df = spark.table("sap_s4hana_delta.ekko")
 friendly_df = raw_df.select("purchase_order", "company_code", "created_on")
-df = query_helper.query("ekko", friendly_df)
+df = query.query("ekko", friendly_df)
 df.show()
 ```
